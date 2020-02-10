@@ -1,6 +1,11 @@
-import { combineReducers } from "redux";
 import { reducer as formReducer } from "redux-form";
-const rootReducer = combineReducers({
+import { combineReducers } from "redux-immer";
+import produce from "immer";
+
+import ticket from "./ticket";
+
+const rootReducer = combineReducers(produce, {
+  ticket,
   form: formReducer
 });
 

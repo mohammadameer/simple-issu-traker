@@ -1,9 +1,6 @@
-import { Cookies } from "react-cookie";
 import Axios from "axios";
 
-Axios.defaults.baseURL = "https//google.com";
-
-const cookie = new Cookies();
+Axios.defaults.baseURL = "/api";
 
 const errorHandler = (type, error, dispatch) => {
   const errorMessage = error && error.resposne ? error.response.data : error;
@@ -28,11 +25,11 @@ export const getData = (
         type,
         payload: response.data
       });
-      callback(response.data);
+      if (callback) callback(response.data);
     })
     .catch(error => {
       errorHandler(typeError, error, dispatch);
-      callbackError(error.response);
+      if (callbackError) callbackError(error.response);
     });
 };
 

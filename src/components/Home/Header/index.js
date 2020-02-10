@@ -6,7 +6,8 @@ import BugReportOutlinedIcon from "@material-ui/icons/BugReportOutlined";
 
 const styles = theme => ({
   root: {
-    padding: 20
+    padding: 20,
+    borderBottom: "3px solid #eee"
   },
   logoText: {
     fontSize: 25
@@ -25,11 +26,7 @@ const Header = ({ classes }) => {
         <Grid item>
           <Grid container alignItems="center">
             <BugReportOutlinedIcon />{" "}
-            <Typography
-              variant="h1"
-              display="inline"
-              className={classes.logoText}
-            >
+            <Typography variant="h1" className={classes.logoText}>
               Simple Issue Tracker
             </Typography>
           </Grid>

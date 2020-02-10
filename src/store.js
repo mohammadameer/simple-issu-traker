@@ -4,7 +4,8 @@ import logger from "redux-logger";
 
 // combined reducers
 import reducers from "./reducers/index";
-// create store with middlewares
+
+// create the redux store and add some middlewares
 const createStoreWithMiddleware = applyMiddleware(
   logger,
   reduxThunk
