@@ -9,17 +9,20 @@ import {
 const renderSelectField = ({
   input,
   label,
-  meta: { touched, error },
+  meta,
   children,
   fullWidth,
+  value,
   ...custom
 }) => (
-  <FormControl error={touched && error} fullWidth={fullWidth}>
+  <FormControl error={meta && meta.touched && meta.error} fullWidth={fullWidth}>
     <InputLabel htmlFor="age-native-simple">{label}</InputLabel>
-    <Select {...input} {...custom}>
+    <Select {...input} {...custom} value={value}>
       {children}
     </Select>
-    {touched && error && <FormHelperText>{error}</FormHelperText>}
+    {meta && meta.touched && meta.error && (
+      <FormHelperText>{meta.error}</FormHelperText>
+    )}
   </FormControl>
 );
 

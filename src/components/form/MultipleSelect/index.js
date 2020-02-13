@@ -16,10 +16,8 @@ const useStyles = makeStyles({
     flexWrap: "wrap"
   },
   selected: {
-    marginRight: 20,
     backgroundColor: "#323232",
     padding: 3,
-    borderRadius: 20,
     boxSizing: "border-box",
     color: "#fff"
   }

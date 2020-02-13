@@ -43,7 +43,8 @@ const NewTicket = props => {
     const data = {
       ...values,
       tags,
-      created: new Date()
+      created: new Date(),
+      status: "todo"
     };
 
     props.createTicket(data);
@@ -102,8 +103,8 @@ const NewTicket = props => {
                     format={value => (Array.isArray(value) ? value : [])}
                     component={MultipleSelect}
                   >
-                    <MenuItem value="FrontEnd bug">FrontEnd bug</MenuItem>
-                    <MenuItem value="BackEnd bug">BackEnd bug</MenuItem>
+                    <MenuItem value="frontend_bug">FrontEnd bug</MenuItem>
+                    <MenuItem value="backend_bug">BackEnd bug</MenuItem>
                   </Field>
                 </Grid>
                 {/* user */}
