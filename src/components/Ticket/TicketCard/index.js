@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 // material ui components
 import { Typography, Grid, makeStyles, Checkbox } from "@material-ui/core";
@@ -32,14 +32,20 @@ const useStyles = makeStyles({
     position: "absolute",
     right: -10,
     top: -10,
-    display: "none",
-    "&:active": {
-      opacity: 1
-    }
+    display: "none"
   }
 });
 
-const TicketCard = ({ title, priority, tags, users }) => {
+const TicketCard = ({
+  id,
+  title,
+  priority,
+  tags,
+  users,
+  checkIssue,
+  unCheckIssue
+}) => {
+  const [checked, setChecked] = useState(false);
   const classes = useStyles();
 
   const getStyle = tag => {
@@ -62,9 +68,23 @@ const TicketCard = ({ title, priority, tags, users }) => {
     return style;
   };
 
+  const handleCheckbox = () => {
+    if (checked) {
+      unCheckIssue(id);
+    } else {
+      checkIssue(id);
+    }
+    setChecked(!checked);
+  };
+
   return (
     <Grid item xs={12} sm={5} md={4}>
-      <Grid container spacing={2} className={classes.root}>
+      <Grid
+        container
+        spacing={2}
+        style={checked ? { backgroundColor: "#d5d5d5" } : {}}
+        className={classes.root}
+      >
         <Grid item xs={12}>
           <Grid container>
             <Grid item xs={9} sm={9} md={10}>
@@ -89,7 +109,12 @@ const TicketCard = ({ title, priority, tags, users }) => {
             ))}
           </Typography>
         </Grid>
-        <Checkbox className={classes.checkbox} />
+        <Checkbox
+          style={checked ? { display: "block" } : {}}
+          checked={checked}
+          onChange={handleCheckbox}
+          className={classes.checkbox}
+        />
       </Grid>
     </Grid>
   );

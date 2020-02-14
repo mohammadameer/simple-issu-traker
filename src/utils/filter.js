@@ -1,3 +1,4 @@
+/* eslint-disable array-callback-return */
 export default (tickets, status, priority, tags, timeOrPriority, ASCOrDESC) => {
   const statusFilter = tickets.filter(ticket => {
     if (status === "") return true;
@@ -33,14 +34,15 @@ export default (tickets, status, priority, tags, timeOrPriority, ASCOrDESC) => {
       }
     });
     return sortFilter;
-  } else if (timeOrPriority == "time") {
+  } else if (timeOrPriority === "time") {
     const sortFilter = tagsFilter.sort((a, b) => {
-      if (ASCOrDESC == "ASC") {
+      if (ASCOrDESC === "ASC") {
         return new Date(a.created) - new Date(b.created);
       } else {
         return new Date(b.created) - new Date(a.created);
       }
     });
+    return sortFilter;
   }
 
   return tagsFilter;

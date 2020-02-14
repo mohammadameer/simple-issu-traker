@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   Grid,
   Typography,
@@ -12,7 +12,7 @@ import { reduxForm, Field } from "redux-form";
 
 // material ui
 import { KeyboardBackspace } from "@material-ui/icons";
-import { createTicket } from "actions/ticket";
+import { createIssue } from "actions/ticket";
 
 // our components
 import TextField from "components/form/TextField";
@@ -27,27 +27,20 @@ const useStyles = makeStyles({
 });
 
 const NewTicket = props => {
-  const [tags, setTags] = useState([]);
-
   const classes = useStyles();
 
   const history = useHistory();
 
   const goBack = () => history.goBack();
 
-  const handleTagsChange = e => {
-    setTags(e.target.value);
-  };
-
   const submit = values => {
     const data = {
       ...values,
-      tags,
       created: new Date(),
       status: "todo"
     };
 
-    props.createTicket(data);
+    props.createIssue(data);
     return history;
   };
 
@@ -167,7 +160,7 @@ const validate = values => {
   return errors;
 };
 
-export default connect(null, { createTicket })(
+export default connect(null, { createIssue })(
   reduxForm({
     form: "newIssue",
     validate,

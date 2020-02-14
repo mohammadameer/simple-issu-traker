@@ -1,27 +1,19 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 
 // actions
-import { createTicket, getTickets } from "actions/ticket";
+import { createIssue, getIssues } from "actions/ticket";
 
 // material ui component
-import {
-  Grid,
-  Button,
-  makeStyles,
-  MenuItem,
-  Divider,
-  ButtonGroup
-} from "@material-ui/core";
+import { Grid, Button, makeStyles, useMediaQuery } from "@material-ui/core";
 import TicketCard from "components/Ticket/TicketCard";
-import { FilterList } from "@material-ui/icons";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { FilterList, AddBox, DeleteForever } from "@material-ui/icons";
 
 // our component
-import Select from "components/form/Select";
-import { createLogger } from "redux-logger";
-import filter from "./filter";
+import Filters from "components/Home/Filters";
+import filter from "utils/filter";
 
 // styles
 const useStyles = makeStyles({
@@ -55,17 +47,22 @@ const Body = props => {
   const [tags, setTags] = useState("");
   const [timeOrPriority, setTimeOrPriority] = useState("");
   const [ASCOrDESC, setASCOrDESC] = useState("ASC");
+  const [checkedIssues, setCheckedIssues] = useState([]);
 
   const history = useHistory();
 
   const classes = useStyles();
 
   useEffect(() => {
-    props.getTickets();
+    props.getIssues();
   }, []);
 
   const newIssue = () => {
     history.push("/tickets/new");
+  };
+
+  const remove = () => {
+    props.removeIssues(checkedIssues);
   };
 
   const reset = () => {
@@ -74,6 +71,15 @@ const Body = props => {
     setTags("");
     setTimeOrPriority("");
     setASCOrDESC("ASC");
+  };
+
+  const checkIssue = id => {
+    setCheckedIssues([...checkedIssues, id]);
+  };
+
+  const unCheckIssue = id => {
+    const filteredIssues = checkedIssues.filter(issue => issue !== id);
+    setCheckedIssues(filteredIssues);
   };
 
   const { tickets } = props;
@@ -85,110 +91,50 @@ const Body = props => {
         justify="center"
         className={classes.root}
       >
-        {/* new issue button and filter */}
+        {/* new issue, filter, and remove buttons */}
         <Grid item xs={12}>
           <Grid container alignItems="center" justify="space-between">
+            {/* filter button */}
             <Grid item>
               <Button onClick={() => setIsFilter(!isFilter)}>
                 <FilterList />
                 Filter
               </Button>
             </Grid>
-            {/* new issue button */}
+            {/* new issue and remove button */}
             <Grid item>
-              <Button onClick={newIssue}>New Issue</Button>
+              {checkedIssues.length >= 1 && (
+                <Button color="secondary" onClick={remove}>
+                  <DeleteForever />
+                  Remove
+                </Button>
+              )}
+              <Button onClick={newIssue}>
+                {" "}
+                <AddBox />
+                New Issue
+              </Button>
             </Grid>
           </Grid>
         </Grid>
         {/* filters */}
         {isFilter && (
-          <Grid item xs={12} className={classes.filters}>
-            <Grid container alignItems="center" spacing={5}>
-              <Grid item xs={12} sm={4} md={2}>
-                <Select
-                  label="status"
-                  fullWidth
-                  value={status}
-                  onChange={e => setStatus(e.target.value)}
-                >
-                  <MenuItem value="todo">ToDo</MenuItem>
-                  <MenuItem value="in_progress">In Progress</MenuItem>
-                  <MenuItem value="done">Done</MenuItem>
-                </Select>
-              </Grid>
-              <Grid item xs={12} sm={4} md={2}>
-                <Select
-                  label="priority"
-                  fullWidth
-                  value={priority}
-                  onChange={e => setPriority(e.target.value)}
-                >
-                  <MenuItem value="low">Low</MenuItem>
-                  <MenuItem value="normal">Normal</MenuItem>
-                  <MenuItem value="urgent">Urgent</MenuItem>
-                </Select>
-              </Grid>
-              <Grid item xs={12} sm={4} md={2}>
-                <Select
-                  label="tags"
-                  fullWidth
-                  value={tags}
-                  onChange={e => setTags(e.target.value)}
-                >
-                  <MenuItem value="frontend_bug">FrontEnd Bug</MenuItem>
-                  <MenuItem value="backend_bug">Backend Bug</MenuItem>
-                </Select>
-              </Grid>
-              {!matchesXsAndSm && (
-                <Divider
-                  orientation={matchesXs ? "vertical" : "horizontal"}
-                  flexItem
-                  className={
-                    matchesXs
-                      ? classes.verticalDivider
-                      : classes.horizontalDivider
-                  }
-                />
-              )}
-              <Grid item xs={12} sm={3} md={2}>
-                <ButtonGroup>
-                  <Button
-                    disabled={timeOrPriority === "time"}
-                    onClick={() => setTimeOrPriority("time")}
-                  >
-                    Time
-                  </Button>
-                  <Button
-                    disabled={timeOrPriority === "priority"}
-                    onClick={() => setTimeOrPriority("priority")}
-                  >
-                    Priority
-                  </Button>
-                </ButtonGroup>
-              </Grid>
-              {timeOrPriority && (
-                <Grid item xs={12} sm={2} md={2}>
-                  <ButtonGroup>
-                    <Button
-                      disabled={ASCOrDESC === "ASC"}
-                      onClick={() => setASCOrDESC("ASC")}
-                    >
-                      ASC
-                    </Button>
-                    <Button
-                      disabled={ASCOrDESC === "DESC"}
-                      onClick={() => setASCOrDESC("DESC")}
-                    >
-                      DESC
-                    </Button>
-                  </ButtonGroup>
-                </Grid>
-              )}
-              <Grid item xs={12} sm={2} md={1}>
-                <Button onClick={reset}>Reset</Button>
-              </Grid>
-            </Grid>
-          </Grid>
+          <Filters
+            classes={classes}
+            status={status}
+            setStatus={setStatus}
+            priority={priority}
+            setPriority={setPriority}
+            tags={tags}
+            setTags={setTags}
+            timeOrPriority={timeOrPriority}
+            setTimeOrPriority={setTimeOrPriority}
+            ASCOrDESC={ASCOrDESC}
+            setASCOrDESC={setASCOrDESC}
+            matchesXs={matchesXs}
+            matchesXsAndSm={matchesXsAndSm}
+            reset={reset}
+          />
         )}
         {/* issues */}
         <Grid item xs={12} className={classes.issues}>
@@ -206,11 +152,14 @@ const Body = props => {
               ASCOrDESC
             ).map(ticket => (
               <TicketCard
+                id={ticket.id}
                 key={ticket.id}
                 title={ticket.title}
                 tags={ticket.tags}
                 priority={ticket.priority}
                 users={ticket.user}
+                checkIssue={checkIssue}
+                unCheckIssue={unCheckIssue}
               />
             ))}
           </Grid>
@@ -224,4 +173,4 @@ const mapStateToProps = state => ({
   tickets: state.ticket.all
 });
 
-export default connect(mapStateToProps, { createTicket, getTickets })(Body);
+export default connect(mapStateToProps, { createIssue, getIssues })(Body);
