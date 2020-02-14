@@ -1,18 +1,18 @@
 /* eslint-disable array-callback-return */
-export default (tickets, status, priority, tags, timeOrPriority, ASCOrDESC) => {
-  const statusFilter = tickets.filter(ticket => {
+export default (issues, status, priority, tags, timeOrPriority, ASCOrDESC) => {
+  const statusFilter = issues.filter(issue => {
     if (status === "") return true;
-    return ticket.status === status;
+    return issue.status === status;
   });
 
-  const priorityFilter = statusFilter.filter(ticket => {
+  const priorityFilter = statusFilter.filter(issue => {
     if (priority === "") return true;
-    return ticket.priority === priority;
+    return issue.priority === priority;
   });
 
-  const tagsFilter = priorityFilter.filter(ticket => {
+  const tagsFilter = priorityFilter.filter(issue => {
     if (tags === "") return true;
-    return ticket.tags.includes(tags);
+    return issue.tags.includes(tags);
   });
 
   if (timeOrPriority === "priority") {

@@ -12,7 +12,7 @@ import { reduxForm, Field } from "redux-form";
 
 // material ui
 import { KeyboardBackspace } from "@material-ui/icons";
-import { createIssue } from "actions/ticket";
+import { createIssue } from "actions/issue";
 
 // our components
 import TextField from "components/form/TextField";
@@ -26,7 +26,7 @@ const useStyles = makeStyles({
   }
 });
 
-const NewTicket = props => {
+const NewIssue = props => {
   const classes = useStyles();
 
   const history = useHistory();
@@ -167,5 +167,5 @@ export default connect(null, { createIssue })(
     onSubmitSuccess: (history, dispatch) => {
       history.goBack();
     }
-  })(NewTicket)
+  })(NewIssue)
 );

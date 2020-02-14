@@ -2,11 +2,13 @@ import {
   CREATE_ISSUE,
   CREATE_ISSUE_ERROR,
   LOAD_ISSUES,
-  LOAD_ISSUES_ERROR
+  LOAD_ISSUES_ERROR,
+  REMOVE_ISSUES,
+  REMOVE_ISSUES_ERROR
 } from "./constants";
-import { postData, getData } from "./index";
+import { postData, getData, deleteData } from "./index";
 
-const ROOT_URL = "tickets";
+const ROOT_URL = "issues";
 
 export const getIssues = () => {
   const url = `${ROOT_URL}/`;
@@ -19,4 +21,11 @@ export const createIssue = data => {
 
   return dispatch =>
     postData(CREATE_ISSUE, CREATE_ISSUE_ERROR, url, dispatch, data);
+};
+
+export const removeIssues = data => {
+  const url = `${ROOT_URL}/`;
+
+  return dispatch =>
+    deleteData(REMOVE_ISSUES, REMOVE_ISSUES_ERROR, url, dispatch, data);
 };

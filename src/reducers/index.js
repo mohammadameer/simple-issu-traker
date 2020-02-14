@@ -2,10 +2,10 @@ import { reducer as formReducer } from "redux-form";
 import { combineReducers } from "redux-immer";
 import produce from "immer";
 
-import ticket from "./ticket";
+import issues from "./issues";
 
 const rootReducer = combineReducers(produce, {
-  ticket,
+  issues,
   form: formReducer
 });
 

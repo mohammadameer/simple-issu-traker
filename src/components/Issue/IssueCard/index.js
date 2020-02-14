@@ -36,7 +36,7 @@ const useStyles = makeStyles({
   }
 });
 
-const TicketCard = ({
+const IssueCard = ({
   id,
   title,
   priority,
@@ -120,4 +120,4 @@ const TicketCard = ({
   );
 };
 
-export default TicketCard;
+export default IssueCard;

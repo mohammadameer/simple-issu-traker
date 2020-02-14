@@ -9,7 +9,7 @@ import HomeHeader from "components/Home/Header";
 
 // material ui font
 import "typeface-roboto";
-import NewTicket from "components/Ticket/NewTicket";
+import NewIssue from "components/Issue/NewIssue";
 
 function App() {
   return (
@@ -21,8 +21,8 @@ function App() {
           <Route exact path="/">
             <Home />
           </Route>
-          <Route exact path="/tickets/new">
-            <NewTicket />
+          <Route exact path="/issues/new">
+            <NewIssue />
           </Route>
         </Switch>
       </BrowserRouter>

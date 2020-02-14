@@ -13,10 +13,10 @@ const initialState = {
 export default (state = initialState, action) => {
   switch (action.type) {
     case CREATE_ISSUE:
-      state.all.push(action.payload.ticket);
+      state.all.push(action.payload.issue);
       return state;
     case LOAD_ISSUES:
-      state.all = action.payload.tickets;
+      state.all = action.payload.issues;
       return state;
 
     case LOAD_ISSUES_ERROR:

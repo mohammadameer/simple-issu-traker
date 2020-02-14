@@ -4,11 +4,11 @@ import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 
 // actions
-import { createIssue, getIssues } from "actions/ticket";
+import { createIssue, getIssues, removeIssues } from "actions/issue";
 
 // material ui component
 import { Grid, Button, makeStyles, useMediaQuery } from "@material-ui/core";
-import TicketCard from "components/Ticket/TicketCard";
+import IssueCard from "components/Issue/IssueCard";
 import { FilterList, AddBox, DeleteForever } from "@material-ui/icons";
 
 // our component
@@ -58,7 +58,7 @@ const Body = props => {
   }, []);
 
   const newIssue = () => {
-    history.push("/tickets/new");
+    history.push("/issues/new");
   };
 
   const remove = () => {
@@ -82,7 +82,7 @@ const Body = props => {
     setCheckedIssues(filteredIssues);
   };
 
-  const { tickets } = props;
+  const { issues } = props;
   return (
     <React.Fragment>
       <Grid
@@ -144,20 +144,20 @@ const Body = props => {
             spacing={5}
           >
             {filter(
-              tickets,
+              issues,
               status,
               priority,
               tags,
               timeOrPriority,
               ASCOrDESC
-            ).map(ticket => (
-              <TicketCard
-                id={ticket.id}
-                key={ticket.id}
-                title={ticket.title}
-                tags={ticket.tags}
-                priority={ticket.priority}
-                users={ticket.user}
+            ).map(issue => (
+              <IssueCard
+                id={issue.id}
+                key={issue.id}
+                title={issue.title}
+                tags={issue.tags}
+                priority={issue.priority}
+                users={issue.user}
                 checkIssue={checkIssue}
                 unCheckIssue={unCheckIssue}
               />
@@ -170,7 +170,11 @@ const Body = props => {
 };
 
 const mapStateToProps = state => ({
-  tickets: state.ticket.all
+  issues: state.issues.all
 });
 
-export default connect(mapStateToProps, { createIssue, getIssues })(Body);
+export default connect(mapStateToProps, {
+  createIssue,
+  getIssues,
+  removeIssues
+})(Body);

@@ -4,18 +4,18 @@ const mockServer = () => {
   const server = new Server({
     routes() {
       this.namespace = "api";
-      this.get("/tickets", schema => schema.tickets.all());
+      this.get("/issues", schema => schema.issues.all());
 
-      this.post("/tickets", (schema, request) => {
+      this.post("/issues", (schema, request) => {
         const attr = JSON.parse(request.requestBody);
-        return schema.tickets.create(attr);
+        return schema.issues.create(attr);
       });
     },
     models: {
-      ticket: Model
+      issue: Model
     },
     seeds(server) {
-      server.create("ticket", {
+      server.create("issue", {
         title: "help",
         body: "i want help",
         tags: ["frontend_bug", "backend_bug"],
@@ -23,7 +23,7 @@ const mockServer = () => {
         priority: "low",
         created: new Date()
       });
-      server.create("ticket", {
+      server.create("issue", {
         title: "bug",
         body: "there is bug",
         tags: ["frontend_bug", "backend_bug"],
@@ -31,7 +31,7 @@ const mockServer = () => {
         priority: "urgent",
         created: new Date()
       });
-      server.create("ticket", {
+      server.create("issue", {
         title: "server",
         body: "server is down",
         tags: ["backend_bug"],
@@ -39,7 +39,7 @@ const mockServer = () => {
         priority: "urgent",
         created: new Date()
       });
-      server.create("ticket", {
+      server.create("issue", {
         title: "button is not working",
         body: "button in main page is not working",
         tags: ["frontend_bug"],
@@ -47,7 +47,7 @@ const mockServer = () => {
         priority: "normal",
         created: new Date()
       });
-      server.create("ticket", {
+      server.create("issue", {
         title: "error in settings page",
         body: "when enter settings page there is an error",
         tags: ["frontend_bug"],
