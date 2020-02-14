@@ -99,14 +99,13 @@ const IssueCard = ({
         </Grid>
         <Grid item xs={6}>
           {tags.map(tag => (
-            <span className={classes.tag}>tag</span>
+            <span className={classes.tag}>{tag}</span>
           ))}
         </Grid>
         <Grid item container justify="flex-end" xs={6}>
           <Typography>
-            {users.map(user => (
-              <span className={classes.user}>user</span>
-            ))}
+            <span className={classes.user}>{users[0]}</span>
+            {users.length > 1 && <span className={classes.user}>...</span>}
           </Typography>
         </Grid>
         <Checkbox

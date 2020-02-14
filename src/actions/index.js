@@ -88,7 +88,8 @@ export const deleteData = (
   callback = null,
   callbackError = null
 ) => {
-  return Axios.delete(url)
+  console.log(data, "data");
+  return Axios.delete(url, data)
     .then(response => {
       dispatch({
         type,

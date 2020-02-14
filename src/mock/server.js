@@ -10,6 +10,14 @@ const mockServer = () => {
         const attr = JSON.parse(request.requestBody);
         return schema.issues.create(attr);
       });
+
+      this.del("/issues", (schema, request) => {
+        const attr = JSON.parse(request.requestBody);
+        for (let i in attr.issues) {
+          schema.issues.remove(i);
+        }
+        return schema.issues.all();
+      });
     },
     models: {
       issue: Model

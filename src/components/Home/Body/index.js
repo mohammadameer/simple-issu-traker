@@ -41,7 +41,7 @@ const Body = props => {
     "(min-width:600px) and (max-width: 960px)"
   );
 
-  const [isFilter, setIsFilter] = useState(true);
+  const [isFilter, setIsFilter] = useState(false);
   const [status, setStatus] = useState("");
   const [priority, setPriority] = useState("");
   const [tags, setTags] = useState("");
@@ -62,7 +62,7 @@ const Body = props => {
   };
 
   const remove = () => {
-    props.removeIssues(checkedIssues);
+    props.removeIssues({ issues: checkedIssues });
   };
 
   const reset = () => {
@@ -74,13 +74,15 @@ const Body = props => {
   };
 
   const checkIssue = id => {
-    setCheckedIssues([...checkedIssues, id]);
+    setCheckedIssues([...checkedIssues, +id]);
   };
 
   const unCheckIssue = id => {
-    const filteredIssues = checkedIssues.filter(issue => issue !== id);
+    const filteredIssues = checkedIssues.filter(issue => +issue !== +id);
     setCheckedIssues(filteredIssues);
   };
+
+  console.log(checkedIssues);
 
   const { issues } = props;
   return (

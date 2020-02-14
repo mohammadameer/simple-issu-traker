@@ -24,7 +24,7 @@ export const createIssue = data => {
 };
 
 export const removeIssues = data => {
-  const url = `${ROOT_URL}/`;
+  const url = `${ROOT_URL}`;
 
   return dispatch =>
     deleteData(REMOVE_ISSUES, REMOVE_ISSUES_ERROR, url, dispatch, data);
