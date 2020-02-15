@@ -77,12 +77,14 @@ const Filters = ({
       <Grid item xs={12} sm={3} md={2}>
         <ButtonGroup>
           <Button
+            variant="outlined"
             disabled={timeOrPriority === "time"}
             onClick={() => setTimeOrPriority("time")}
           >
             Time
           </Button>
           <Button
+            variant="outlined"
             disabled={timeOrPriority === "priority"}
             onClick={() => setTimeOrPriority("priority")}
           >
@@ -92,14 +94,16 @@ const Filters = ({
       </Grid>
       {timeOrPriority && (
         <Grid item xs={12} sm={2} md={2}>
-          <ButtonGroup>
+          <ButtonGroup variant="outlined">
             <Button
+              variant="outlined"
               disabled={ASCOrDESC === "ASC"}
               onClick={() => setASCOrDESC("ASC")}
             >
               ASC
             </Button>
             <Button
+              variant="outlined"
               disabled={ASCOrDESC === "DESC"}
               onClick={() => setASCOrDESC("DESC")}
             >
@@ -109,7 +113,9 @@ const Filters = ({
         </Grid>
       )}
       <Grid item xs={12} sm={2} md={1}>
-        <Button onClick={reset}>Reset</Button>
+        <Button variant="outlined" onClick={reset}>
+          Reset
+        </Button>
       </Grid>
     </Grid>
   </Grid>

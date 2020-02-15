@@ -3,12 +3,17 @@ import {
   CREATE_ISSUE_ERROR,
   LOAD_ISSUES,
   LOAD_ISSUES_ERROR,
-  REMOVE_ISSUES,
-  REMOVE_ISSUES_ERROR
+  REMOVE_ISSUE,
+  REMOVE_ISSUE_ERROR,
+  GET_ISSUE_ERROR,
+  GET_ISSUE,
+  UPDATE_ISSUE,
+  UPDATE_ISSUE_ERROR
 } from "actions/constants";
 
 const initialState = {
   all: [],
+  activeIssue: null,
   error: {}
 };
 
@@ -20,13 +25,22 @@ export default (state = initialState, action) => {
     case LOAD_ISSUES:
       state.all = action.payload.issues;
       return state;
-    case REMOVE_ISSUES:
-      state.all = state.all.filter(issue =>
-        action.payload.issues.includes(issue.id)
-      );
+    case REMOVE_ISSUE:
+      state.all = state.all.filter(issue => +issue.id !== +action.payload);
+      return state;
+    case GET_ISSUE:
+      state.activeIssue = action.payload.issue;
+      return state;
+    case UPDATE_ISSUE:
+      state.all[
+        +state.all.findIndex(issue => +issue.id === +action.payload.issue.id)
+      ] = action.payload.issue;
+      state.activeIssue = action.payload.issue;
       return state;
 
-    case REMOVE_ISSUES_ERROR:
+    case UPDATE_ISSUE_ERROR:
+    case GET_ISSUE_ERROR:
+    case REMOVE_ISSUE_ERROR:
     case LOAD_ISSUES_ERROR:
     case CREATE_ISSUE_ERROR:
       state.error = action.payload;

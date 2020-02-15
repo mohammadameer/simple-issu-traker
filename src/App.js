@@ -6,10 +6,12 @@ import Home from "./pages/Home";
 
 // our components
 import HomeHeader from "components/Home/Header";
+import Issue from "components/Issue/Issue";
 
 // material ui font
 import "typeface-roboto";
 import NewIssue from "components/Issue/NewIssue";
+import EditIssue from "components/Issue/EditIssue";
 
 function App() {
   return (
@@ -23,6 +25,12 @@ function App() {
           </Route>
           <Route exact path="/issues/new">
             <NewIssue />
+          </Route>
+          <Route exact path="/issues/:id">
+            <Issue />
+          </Route>
+          <Route exact path="/issues/edit/:id">
+            <EditIssue />
           </Route>
         </Switch>
       </BrowserRouter>

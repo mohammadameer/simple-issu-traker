@@ -1,4 +1,9 @@
-import React from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect } from "react";
+import { useHistory, useParams } from "react-router-dom";
+import { reduxForm, Field } from "redux-form";
+
+// material ui
 import {
   Grid,
   Typography,
@@ -7,17 +12,17 @@ import {
   Button,
   MenuItem
 } from "@material-ui/core";
-import { useHistory } from "react-router-dom";
-import { reduxForm, Field } from "redux-form";
-
-// material ui
 import { KeyboardBackspace } from "@material-ui/icons";
-import { createIssue } from "actions/issue";
+
+// actions
+import { updateIssue, getIssue } from "actions/issue";
 
 // our components
 import TextField from "components/form/TextField";
 import MultipleSelect from "components/form/MultipleSelect";
 import Select from "components/form/Select";
+
+// redux
 import { connect } from "react-redux";
 
 const useStyles = makeStyles({
@@ -30,23 +35,17 @@ const NewIssue = props => {
   const classes = useStyles();
 
   const history = useHistory();
+  const { id } = useParams();
+
+  useEffect(() => {
+    props.getIssue(id);
+  }, []);
 
   const goBack = () => history.replace("/");
 
   const submit = values => {
-    const data = {
-      ...values,
-      created: new Date(),
-      status: "todo",
-      updates: []
-    };
-
-    if (!data.tags) {
-      data.tags = ["frontend_bug", "backend_bug"];
-    }
-
-    props.createIssue(data);
-    return history;
+    props.updateIssue(+id, values);
+    return { history, id };
   };
 
   const { handleSubmit, pristine, submitting } = props;
@@ -85,7 +84,7 @@ const NewIssue = props => {
                 label="body"
                 fullWidth
                 multiline
-                rows={4}
+                rows={2}
                 component={TextField}
               />
             </Grid>
@@ -121,27 +120,54 @@ const NewIssue = props => {
                 </Grid>
               </Grid>
             </Grid>
-            <Grid item xs={12} sm={6}>
+            <Grid item>
+              <Grid container justify="space-between" spacing={5}>
+                <Grid item xs={12} sm={6}>
+                  <Field
+                    name="priority"
+                    label="priority"
+                    fullWidth
+                    component={Select}
+                  >
+                    <MenuItem value="low">Low</MenuItem>
+                    <MenuItem value="normal">Normal</MenuItem>
+                    <MenuItem value="urgent">Urgent</MenuItem>
+                  </Field>
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <Field
+                    name="status"
+                    label="status"
+                    fullWidth
+                    component={Select}
+                  >
+                    <MenuItem value="todo">To Do</MenuItem>
+                    <MenuItem value="in_progress">In Progress</MenuItem>
+                    <MenuItem value="done">Done</MenuItem>
+                  </Field>
+                </Grid>
+              </Grid>
+            </Grid>
+            <Grid item xs={12}>
               <Field
-                name="priority"
-                label="priority"
+                name="newUpdate"
+                label="update"
                 fullWidth
-                component={Select}
-              >
-                <MenuItem value="low">Low</MenuItem>
-                <MenuItem value="normal">Normal</MenuItem>
-                <MenuItem value="urgent">Urgent</MenuItem>
-              </Field>
+                multiline
+                rows={2}
+                component={TextField}
+              />
             </Grid>
             <Grid item>
               <Grid container justify="center">
                 <Button
                   variant="outlined"
+                  color="primary"
                   fullWidth
                   disabled={pristine || submitting}
                   type="submit"
                 >
-                  Submit
+                  Update
                 </Button>
               </Grid>
             </Grid>
@@ -160,15 +186,23 @@ const validate = values => {
     if (!values[field]) errors[field] = "Required !!";
   });
 
+  if (!(values["tags"] && values["tags"].length > 0))
+    errors["tags"] = "Required !!";
+
   return errors;
 };
 
-export default connect(null, { createIssue })(
+const mapStateToProps = state => ({
+  initialValues: state.issues.activeIssue
+});
+
+export default connect(mapStateToProps, { updateIssue, getIssue })(
   reduxForm({
-    form: "newIssue",
+    form: "editIssue",
     validate,
-    onSubmitSuccess: (history, dispatch) => {
-      history.goBack();
+    enableReinitialize: true,
+    onSubmitSuccess: ({ history, id }, dispatch) => {
+      history.replace(`/issues/${id}`);
     }
   })(NewIssue)
 );

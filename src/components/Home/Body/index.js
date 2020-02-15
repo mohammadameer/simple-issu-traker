@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 
 // actions
-import { createIssue, getIssues, removeIssues } from "actions/issue";
+import { createIssue, getIssues, removeIssue } from "actions/issue";
 
 // material ui component
 import { Grid, Button, makeStyles, useMediaQuery } from "@material-ui/core";
@@ -31,6 +31,9 @@ const useStyles = makeStyles({
   },
   horizontalDivider: {
     width: "100%"
+  },
+  remove: {
+    marginRight: 10
   }
 });
 
@@ -62,7 +65,10 @@ const Body = props => {
   };
 
   const remove = () => {
-    props.removeIssues({ issues: checkedIssues });
+    for (let i of checkedIssues) {
+      props.removeIssue(i);
+    }
+    setCheckedIssues([]);
   };
 
   const reset = () => {
@@ -82,8 +88,6 @@ const Body = props => {
     setCheckedIssues(filteredIssues);
   };
 
-  console.log(checkedIssues);
-
   const { issues } = props;
   return (
     <React.Fragment>
@@ -98,7 +102,7 @@ const Body = props => {
           <Grid container alignItems="center" justify="space-between">
             {/* filter button */}
             <Grid item>
-              <Button onClick={() => setIsFilter(!isFilter)}>
+              <Button variant="outlined" onClick={() => setIsFilter(!isFilter)}>
                 <FilterList />
                 Filter
               </Button>
@@ -106,12 +110,17 @@ const Body = props => {
             {/* new issue and remove button */}
             <Grid item>
               {checkedIssues.length >= 1 && (
-                <Button color="secondary" onClick={remove}>
+                <Button
+                  className={classes.remove}
+                  variant="outlined"
+                  color="secondary"
+                  onClick={remove}
+                >
                   <DeleteForever />
                   Remove
                 </Button>
               )}
-              <Button onClick={newIssue}>
+              <Button variant="outlined" onClick={newIssue}>
                 {" "}
                 <AddBox />
                 New Issue
@@ -154,12 +163,8 @@ const Body = props => {
               ASCOrDESC
             ).map(issue => (
               <IssueCard
-                id={issue.id}
                 key={issue.id}
-                title={issue.title}
-                tags={issue.tags}
-                priority={issue.priority}
-                users={issue.user}
+                issue={issue}
                 checkIssue={checkIssue}
                 unCheckIssue={unCheckIssue}
               />
@@ -178,5 +183,5 @@ const mapStateToProps = state => ({
 export default connect(mapStateToProps, {
   createIssue,
   getIssues,
-  removeIssues
+  removeIssue
 })(Body);

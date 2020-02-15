@@ -18,7 +18,8 @@ const useStyles = makeStyles({
     backgroundColor: "#323232",
     padding: 3,
     boxSizing: "border-box",
-    color: "#fff"
+    color: "#fff",
+    marginRight: 5
   }
 });
 

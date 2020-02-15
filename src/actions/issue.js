@@ -3,10 +3,14 @@ import {
   CREATE_ISSUE_ERROR,
   LOAD_ISSUES,
   LOAD_ISSUES_ERROR,
-  REMOVE_ISSUES,
-  REMOVE_ISSUES_ERROR
+  REMOVE_ISSUE,
+  REMOVE_ISSUE_ERROR,
+  GET_ISSUE,
+  GET_ISSUE_ERROR,
+  UPDATE_ISSUE,
+  UPDATE_ISSUE_ERROR
 } from "./constants";
-import { postData, getData, deleteData } from "./index";
+import { postData, getData, deleteData, putData } from "./index";
 
 const ROOT_URL = "issues";
 
@@ -23,9 +27,24 @@ export const createIssue = data => {
     postData(CREATE_ISSUE, CREATE_ISSUE_ERROR, url, dispatch, data);
 };
 
-export const removeIssues = data => {
-  const url = `${ROOT_URL}`;
+export const removeIssue = id => {
+  const url = `${ROOT_URL}/${id}/`;
 
   return dispatch =>
-    deleteData(REMOVE_ISSUES, REMOVE_ISSUES_ERROR, url, dispatch, data);
+    deleteData(REMOVE_ISSUE, REMOVE_ISSUE_ERROR, url, dispatch);
+};
+
+export const getIssue = id => {
+  const url = `${ROOT_URL}/${id}/`;
+
+  return dispatch => {
+    getData(GET_ISSUE, GET_ISSUE_ERROR, url, dispatch);
+  };
+};
+
+export const updateIssue = (id, data) => {
+  const url = `${ROOT_URL}/${id}`;
+
+  return dispatch =>
+    putData(UPDATE_ISSUE, UPDATE_ISSUE_ERROR, url, dispatch, data);
 };

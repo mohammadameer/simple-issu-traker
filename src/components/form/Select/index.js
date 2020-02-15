@@ -12,12 +12,11 @@ const renderSelectField = ({
   meta,
   children,
   fullWidth,
-  value,
   ...custom
 }) => (
   <FormControl error={meta && meta.touched && meta.error} fullWidth={fullWidth}>
     <InputLabel htmlFor="age-native-simple">{label}</InputLabel>
-    <Select {...input} {...custom} value={value}>
+    <Select {...input} {...custom}>
       {children}
     </Select>
     {meta && meta.touched && meta.error && (
