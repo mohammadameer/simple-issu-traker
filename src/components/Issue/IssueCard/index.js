@@ -21,23 +21,25 @@ const useStyles = makeStyles({
     borderRadius: 5,
     position: "relative",
     "&:hover": {
-      backgroundColor: "#d5d5d5",
+      backgroundColor: "#ababab",
       "& $checkbox": {
         display: "block"
       }
     }
   },
   tag: {
-    backgroundColor: "#eee",
+    backgroundColor: "#424242",
     padding: 5,
     borderRadius: 5,
-    marginRight: 10
+    marginRight: 10,
+    color: "#fff"
   },
   user: {
-    backgroundColor: "#eee",
+    backgroundColor: "#424242",
     padding: 5,
     borderRadius: 5,
-    marginRight: 10
+    marginRight: 10,
+    color: "#fff"
   },
   checkbox: {
     position: "absolute",
@@ -78,9 +80,7 @@ const IssueCard = ({ issue, checkIssue, unCheckIssue }) => {
           <Grid item xs={12}>
             <Grid container>
               <Grid item xs={9} sm={9} md={10}>
-                <Typography variant="h5" component="h2">
-                  {title}
-                </Typography>
+                <Typography variant="h5">{title}</Typography>
               </Grid>
               <Grid item xs={3} sm={3} md={2}>
                 <Typography style={getStyles(priority)}>{priority}</Typography>
@@ -89,9 +89,9 @@ const IssueCard = ({ issue, checkIssue, unCheckIssue }) => {
           </Grid>
           <Grid item xs={12}>
             {tags.map(tag => (
-              <span key={tag} className={classes.tag}>
+              <Typography component="span" key={tag} className={classes.tag}>
                 {tag}
-              </span>
+              </Typography>
             ))}
           </Grid>
           <Grid item xs={12}>

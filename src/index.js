@@ -7,11 +7,6 @@ import App from "./App";
 import { Provider } from "react-redux";
 import store from "./store";
 
-// mock server
-import mockServer from "./mock/server";
-
-mockServer();
-
 ReactDOM.render(
   <Provider store={store}>
     <App />

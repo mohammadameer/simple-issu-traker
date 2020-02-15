@@ -26,10 +26,11 @@ const useStyles = makeStyles({
     maxWidth: "100%"
   },
   chip: {
-    backgroundColor: "#eee",
+    backgroundColor: "#424242",
     padding: 5,
     borderRadius: 5,
-    marginRight: 10
+    marginRight: 10,
+    color: "#fff"
   },
   created: {
     color: "#777"

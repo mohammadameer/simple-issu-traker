@@ -8,7 +8,8 @@ import {
   GET_ISSUE_ERROR,
   GET_ISSUE,
   UPDATE_ISSUE,
-  UPDATE_ISSUE_ERROR
+  UPDATE_ISSUE_ERROR,
+  RESET
 } from "actions/constants";
 
 const initialState = {
@@ -36,6 +37,11 @@ export default (state = initialState, action) => {
         +state.all.findIndex(issue => +issue.id === +action.payload.issue.id)
       ] = action.payload.issue;
       state.activeIssue = action.payload.issue;
+      return state;
+
+    case RESET:
+      state.all = [];
+      state.activeIssue = null;
       return state;
 
     case UPDATE_ISSUE_ERROR:
