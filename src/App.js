@@ -41,6 +41,13 @@ function App({ mode, data, reset, getIssue, getIssues }) {
   const [server, setServer] = useState(null);
 
   useEffect(() => {
+    const jssStyles = document.querySelector("#jss-server-side");
+    if (jssStyles) {
+      jssStyles.parentElement.removeChild(jssStyles);
+    }
+  }, []);
+
+  useEffect(() => {
     if (data === "mock") setServer(mockServer());
     getIssues();
   }, [data]);

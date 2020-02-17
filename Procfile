@@ -1,0 +1,1 @@
+web: node build/server.generated.js
