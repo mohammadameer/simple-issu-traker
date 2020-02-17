@@ -16,6 +16,7 @@ import { connect } from "react-redux";
 // actions
 import { changeMode } from "actions/theme";
 import { changeDataSource } from "actions/data";
+import { Link } from "react-router-dom";
 
 const styles = theme => ({
   root: {
@@ -48,7 +49,6 @@ const Header = props => {
   };
 
   const handeModeChange = () => {
-    console.log("hello hello");
     const mode = props.mode === "light" ? "dark" : "light";
     props.changeMode(mode);
   };
@@ -69,12 +69,14 @@ const Header = props => {
         className={classes.root}
       >
         <Grid item>
-          <Grid container alignItems="center">
-            <BugReportOutlinedIcon />{" "}
-            <Typography variant="h1" className={classes.logoText}>
-              Simple Issue Tracker
-            </Typography>
-          </Grid>
+          <Link to="/">
+            <Grid container alignItems="center">
+              <BugReportOutlinedIcon />{" "}
+              <Typography variant="h1" className={classes.logoText}>
+                Simple Issue Tracker
+              </Typography>
+            </Grid>
+          </Link>
         </Grid>
         <Grid item>
           <IconButton onClick={handleModal}>

@@ -60,7 +60,9 @@ const Issue = props => {
       <Grid item xs={12} md={8} lg={7}>
         <Grid container alignItems="center" justify="space-between">
           <Grid item>
-            <Typography variant="h4">Issue #{issue && issue.id}</Typography>
+            <Typography variant="h4">
+              Issue #{issue && (issue.id || issue._id)}
+            </Typography>
             <span className={classes.created}>
               {issue && getTime(issue.created)}
             </span>

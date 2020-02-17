@@ -27,11 +27,13 @@
     "redux-immer": "^1.0.4",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0",
-    "typeface-roboto": "0.0.75"
+    "typeface-roboto": "0.0.75",
+    "webpack-node-externals": "^1.7.2"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "build-server": "webpack --config webpack.config.server.js",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -51,6 +53,9 @@
     ]
   },
   "devDependencies": {
-    "miragejs": "^0.1.33"
+    "html-loader": "^0.5.5",
+    "miragejs": "^0.1.33",
+    "nodemon": "^2.0.2",
+    "webpack-cli": "^3.3.11"
   }
 }

@@ -27,14 +27,18 @@ export default (state = initialState, action) => {
       state.all = action.payload.issues;
       return state;
     case REMOVE_ISSUE:
-      state.all = state.all.filter(issue => +issue.id !== +action.payload);
+      state.all = state.all.filter(issue => +issue.id !== action.payload);
+      state.all = state.all.filter(issue => issue._id !== action.payload);
       return state;
     case GET_ISSUE:
       state.activeIssue = action.payload.issue;
       return state;
     case UPDATE_ISSUE:
       state.all[
-        +state.all.findIndex(issue => +issue.id === +action.payload.issue.id)
+        state.all.findIndex(issue => +issue.id === +action.payload.issue.id)
+      ] = action.payload.issue;
+      state.all[
+        state.all.findIndex(issue => issue._id === action.payload.issue.id)
       ] = action.payload.issue;
       state.activeIssue = action.payload.issue;
       return state;

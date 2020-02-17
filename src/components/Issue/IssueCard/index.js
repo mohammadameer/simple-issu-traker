@@ -55,21 +55,21 @@ const IssueCard = ({ issue, checkIssue, unCheckIssue }) => {
   const [checked, setChecked] = useState(false);
   const classes = useStyles();
 
-  const { id, title, tags, priority, users } = issue;
+  const { id, _id, title, tags, priority, users } = issue;
 
   const handleCheckbox = e => {
     e.stopPropagation();
     if (checked) {
-      unCheckIssue(id);
+      unCheckIssue(id || _id);
     } else {
-      checkIssue(id);
+      checkIssue(id || _id);
     }
     setChecked(!checked);
   };
 
   return (
     <Grid item xs={12} sm={5} md={4}>
-      <Link to={`/issues/${id}`}>
+      <Link to={`/issues/${id || _id}`}>
         <Grid
           container
           spacing={2}

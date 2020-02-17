@@ -80,11 +80,11 @@ const Body = props => {
   };
 
   const checkIssue = id => {
-    setCheckedIssues([...checkedIssues, +id]);
+    setCheckedIssues([...checkedIssues, id]);
   };
 
   const unCheckIssue = id => {
-    const filteredIssues = checkedIssues.filter(issue => +issue !== +id);
+    const filteredIssues = checkedIssues.filter(issue => issue !== id);
     setCheckedIssues(filteredIssues);
   };
 
@@ -154,21 +154,22 @@ const Body = props => {
             justify={matchesSm ? "flex-start" : "space-between"}
             spacing={5}
           >
-            {filter(
-              issues,
-              status,
-              priority,
-              tags,
-              timeOrPriority,
-              ASCOrDESC
-            ).map(issue => (
-              <IssueCard
-                key={issue.id}
-                issue={issue}
-                checkIssue={checkIssue}
-                unCheckIssue={unCheckIssue}
-              />
-            ))}
+            {issues &&
+              filter(
+                issues,
+                status,
+                priority,
+                tags,
+                timeOrPriority,
+                ASCOrDESC
+              ).map(issue => (
+                <IssueCard
+                  key={issue.id || issue._id}
+                  issue={issue}
+                  checkIssue={checkIssue}
+                  unCheckIssue={unCheckIssue}
+                />
+              ))}
           </Grid>
         </Grid>
       </Grid>

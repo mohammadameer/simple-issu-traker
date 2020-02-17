@@ -3,7 +3,7 @@ import bodyParser from "body-parser";
 import compress from "compression";
 import cors from "cors";
 import helmet from "helmet";
-import Template from "../../public/index.html";
+import Template from "../../build/index.html";
 import path from "path";
 
 import issueRoutes from "./routes/issue.routes";
@@ -11,9 +11,8 @@ import issueRoutes from "./routes/issue.routes";
 const CURRENT_WORKING_DIR = process.cwd();
 
 const app = express();
-if (process.env.NODE_ENV === "development") devBundle.compile(app);
 
-app.use("/dist", express.static(path.join(CURRENT_WORKING_DIR, "dist")));
+app.use(express.static(path.resolve(process.cwd(), "build")));
 // parse body params and attache them to req.body
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -24,10 +23,12 @@ app.use(helmet());
 app.use(cors());
 
 // mount routes
-app.use("/", issueRoutes);
+app.use("/api", issueRoutes);
 
-app.get("/*", (req, res) => {
-  res.status(200).send(Template());
+app.get("/*", (request, response) => {
+  response
+    .status(200)
+    .sendFile(path.resolve(process.cwd(), "build", "index.html"));
 });
 
 // Catch unauthorised errors

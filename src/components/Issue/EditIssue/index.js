@@ -44,7 +44,7 @@ const NewIssue = props => {
   const goBack = () => history.replace("/");
 
   const submit = values => {
-    props.updateIssue(+id, values);
+    props.updateIssue(id, values);
     return { history, id };
   };
 
