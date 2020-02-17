@@ -1,15 +1,32 @@
 import React from "react";
-import ReactDOM from "react-dom";
+import { hydrate } from "react-dom";
 import "./index.css";
 import App from "./App";
 
 // redux
 import { Provider } from "react-redux";
-import store from "./store";
+import { createStore } from "redux";
 
-ReactDOM.render(
+// material-ui
+import { ThemeProvider, createMuiTheme, CssBaseline } from "@material-ui/core";
+
+// react router
+import { BrowserRouter } from "react-router-dom";
+
+const preloadedState = window.__PRELOADED_STATE__;
+
+delete window.__PRELOADED_STATE__;
+
+const store = createStore(preloadedState);
+
+hydrate(
   <Provider store={store}>
-    <App />
+    <ThemeProvider theme={createMuiTheme({ palette: { type: mode } })}>
+      <CssBaseline />
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </ThemeProvider>
   </Provider>,
   document.getElementById("root")
 );

@@ -13,6 +13,13 @@ const config = {
     libraryTarget: "commonjs2"
   },
   externals: [nodeExternals()],
+  resolve: {
+    alias: {
+      actions: path.resolve(CURRENT_WORKING_DIR, "src/actions"),
+      components: path.resolve(CURRENT_WORKING_DIR, "src/components"),
+      utils: path.resolve(CURRENT_WORKING_DIR, "src/utils")
+    }
+  },
   module: {
     rules: [
       {
@@ -27,6 +34,10 @@ const config = {
       {
         test: /\.html$/i,
         loader: "html-loader"
+      },
+      {
+        test: /\.css$/,
+        use: ["style-loader", "css-loader"]
       }
     ]
   }

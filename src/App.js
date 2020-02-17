@@ -2,6 +2,8 @@
 import React, { useEffect, useState } from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 
+import "regenerator-runtime";
+
 // pages
 import Home from "./pages/Home";
 
@@ -10,7 +12,6 @@ import HomeHeader from "components/Home/Header";
 import Issue from "components/Issue/Issue";
 
 // material ui font
-import "typeface-roboto";
 import {
   makeStyles,
   ThemeProvider,
@@ -53,27 +54,22 @@ function App({ mode, data, reset, getIssue, getIssues }) {
 
   return (
     <div className={classes.app}>
-      <ThemeProvider theme={createMuiTheme({ palette: { type: mode } })}>
-        <CssBaseline />
-        <BrowserRouter>
-          <HomeHeader />
+      <HomeHeader />
 
-          <Switch>
-            <Route exact path="/">
-              <Home />
-            </Route>
-            <Route exact path="/issues/new">
-              <NewIssue />
-            </Route>
-            <Route exact path="/issues/:id">
-              <Issue />
-            </Route>
-            <Route exact path="/issues/edit/:id">
-              <EditIssue />
-            </Route>
-          </Switch>
-        </BrowserRouter>
-      </ThemeProvider>
+      <Switch>
+        <Route exact path="/">
+          <Home />
+        </Route>
+        <Route exact path="/issues/new">
+          <NewIssue />
+        </Route>
+        <Route exact path="/issues/:id">
+          <Issue />
+        </Route>
+        <Route exact path="/issues/edit/:id">
+          <EditIssue />
+        </Route>
+      </Switch>
     </div>
   );
 }

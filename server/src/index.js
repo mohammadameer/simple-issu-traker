@@ -2,6 +2,8 @@ import config from "./config/config";
 import app from "./express";
 import mongoose from "mongoose";
 
+import "regenerator-runtime/runtime";
+
 // Connection URL
 mongoose.connect(config.mongoUri);
 mongoose.connection.on("error", () => {
