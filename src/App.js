@@ -62,6 +62,8 @@ function App({ mode, data, reset, getIssue, getIssues }) {
   return (
     <div className={classes.app}>
       <ThemeProvider theme={createMuiTheme({ palette: { type: mode } })}>
+        <CssBaseline />
+
         <HomeHeader />
 
         <Switch>
