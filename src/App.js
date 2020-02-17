@@ -61,22 +61,24 @@ function App({ mode, data, reset, getIssue, getIssues }) {
 
   return (
     <div className={classes.app}>
-      <HomeHeader />
+      <ThemeProvider theme={createMuiTheme({ palette: { type: mode } })}>
+        <HomeHeader />
 
-      <Switch>
-        <Route exact path="/">
-          <Home />
-        </Route>
-        <Route exact path="/issues/new">
-          <NewIssue />
-        </Route>
-        <Route exact path="/issues/:id">
-          <Issue />
-        </Route>
-        <Route exact path="/issues/edit/:id">
-          <EditIssue />
-        </Route>
-      </Switch>
+        <Switch>
+          <Route exact path="/">
+            <Home />
+          </Route>
+          <Route exact path="/issues/new">
+            <NewIssue />
+          </Route>
+          <Route exact path="/issues/:id">
+            <Issue />
+          </Route>
+          <Route exact path="/issues/edit/:id">
+            <EditIssue />
+          </Route>
+        </Switch>
+      </ThemeProvider>
     </div>
   );
 }

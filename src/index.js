@@ -21,12 +21,10 @@ const store = createStore(preloadedState);
 
 hydrate(
   <Provider store={store}>
-    <ThemeProvider theme={createMuiTheme({ palette: { type: mode } })}>
-      <CssBaseline />
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </ThemeProvider>
+    <CssBaseline />
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
   </Provider>,
   document.getElementById("root")
 );
