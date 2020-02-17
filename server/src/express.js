@@ -24,7 +24,7 @@ app.use(cors());
 
 app.use("/api", issueRoutes);
 
-app.get("*", serverRenderer);
+app.get("/*", serverRenderer);
 
 app.use((err, req, res, next) => {
   if (err.name === "UnauthorizedError") {
